@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {PrivatBankService} from "./services/privat-bank.service";
+import {PrivatBankService} from './services/privat-bank.service';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +7,16 @@ import {PrivatBankService} from "./services/privat-bank.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
+  exchangeRates: [] = [];
   constructor(
     private PBService: PrivatBankService
   ) {}
   ngOnInit () {
-    this.PBService.getCurrency().subscribe(data => {
+    this.getCurrencyes();
+  }
+  getCurrencyes() {
+    this.PBService.getRates().subscribe(data => {
+      this.exchangeRates = data;
       console.log(data);
     });
   }
