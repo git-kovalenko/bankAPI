@@ -7,7 +7,7 @@ import {PrivatBankService} from './services/privat-bank.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  exchangeRates: [] = [];
+  exchangeRates = [];
   constructor(
     private PBService: PrivatBankService
   ) {}
