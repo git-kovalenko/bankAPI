@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CurrencyRatesComponent } from './aside/currency-rates/currency-rates.component';
 import { AsideComponent } from './aside/aside.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
@@ -15,7 +16,8 @@ import { AsideComponent } from './aside/aside.component';
   declarations: [
     AppComponent,
     AsideComponent,
-    CurrencyRatesComponent
+    CurrencyRatesComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

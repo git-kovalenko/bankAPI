@@ -5,7 +5,7 @@ import { PrivatBankService } from '../../services/privat-bank.service';
 @Component({
   selector: 'app-currency-rates',
   templateUrl: './currency-rates.component.html',
-  styleUrls: ['./currency-rates.component.css']
+  styleUrls: ['./currency-rates.component.scss']
 })
 export class CurrencyRatesComponent implements OnInit {
   exchangeRates = [];
