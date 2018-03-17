@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  private collapsed = true;
-  private dropDown = false;
+  collapsed = true;
+  dropDown = false;
   constructor() { }
 
   ngOnInit() {

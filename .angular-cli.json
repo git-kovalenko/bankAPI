@@ -55,6 +55,10 @@
   },
   "defaults": {
     "styleExt": "css",
-    "component": {}
+    "component": {},
+    "serve": {
+      "sslKey": "../../nodeApp/certificates/private.key",
+      "sslCert": "../../nodeApp/certificates/domain.crt"
+    }
   }
 }
