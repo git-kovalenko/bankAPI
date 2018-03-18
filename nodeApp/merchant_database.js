@@ -1,14 +1,15 @@
 module.exports = function(pool){
-  const Database = {
-    createTable: function(callback) {
-      pool.query(`CREATE TABLE IF NOT EXISTS merchant
-          ( id VARCHAR(25),
-          password VARCHAR(256),
-          name VARCHAR(256),
-          cardNumber VARCHAR(16),
-          timestamp TIMESTAMP,
-          PRIMARY KEY(id)
-    )`, (err, rows) => {
+  const TABLE_NAME = 'merchant';
+  return {
+    createTable: (callback) => {
+      pool.query(`CREATE TABLE IF NOT EXISTS ${TABLE_NAME}
+        ( id VARCHAR(25),
+        password VARCHAR(256),
+        name VARCHAR(256),
+        cardNumber VARCHAR(16),
+        timestamp TIMESTAMP,
+        PRIMARY KEY(id)
+      )`, (err, rows) => {
         if (err) throw err;
         if(callback) {
           callback(rows);
@@ -17,19 +18,15 @@ module.exports = function(pool){
     },
 
     add: function(params, callback){
-      console.log(params)
-      pool.query('INSERT INTO merchant SET ? ON DUPLICATE KEY UPDATE `timestamp`=CURRENT_TIMESTAMP', params, function(err, rows, fields){
+      pool.query(`INSERT INTO ${TABLE_NAME} SET ? ON DUPLICATE KEY UPDATE timestamp=CURRENT_TIMESTAMP`, params, (err, rows) =>{
         if (err) throw err;
-        if (rows){
-          console.log('          affectedRows : '+ rows.affectedRows);
-        }
         callback(rows);
       });
     },
 
     getById: function(merchantId){
       return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM merchant WHERE `id` = ?', merchantId, function(err, rows){
+        pool.query(`SELECT * FROM ${TABLE_NAME} WHERE id = ?`, merchantId, function(err, rows){
           if (err){
             reject(err);
             throw err;
@@ -41,15 +38,25 @@ module.exports = function(pool){
     },
 
     getAll: function(callback){
-      pool.query('SELECT * FROM merchant', function(err, rows){
+      pool.query(`SELECT * FROM ${TABLE_NAME}`, function(err, rows){
         if (err){
           throw err;
         }else{
-          console.log('AllRows = '+ rows.length);
           callback(rows);
+        }
+      });
+    },
+
+    tableExist: function(callback){
+      pool.query(`SELECT * FROM information_schema.TABLES
+                  WHERE (TABLE_SCHEMA = '${process.configDb.database}'
+                  AND (TABLE_NAME = '${TABLE_NAME}'))`, (error, rows) => {
+        if (error){
+          throw error;
+        }else {
+          callback(!!rows.length);
         }
       });
     }
   };
-  return Database;
 };

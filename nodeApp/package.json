@@ -35,7 +35,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "./node_modules/.bin/gulp",
-    "live": "nodemon app.js"
+    "live": "nodemon index.js --dev"
   },
   "author": "a.kovalenko",
   "license": "MIT"

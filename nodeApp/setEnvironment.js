@@ -9,17 +9,26 @@ module.exports = ({pool}) => {
     merchantId = merchantId || 133384;
     merchant_database.getById(merchantId)
       .then((rows) => {
-        const row = rows[0] ? rows[0] : null;
-        // console.log(row)
-        process.conf.merchant = row;
+        process.conf.merchant = rows[0] ? rows[0] : null;
+
       });
   };
-
   getMerchant();
 
-  // pay_database.createTable();
-  // merchant_database.createTable(
-  //   (rows) => console.log(rows)
-  // );
+  pay_database.tableExist((exist) => {
+    if (!exist) {
+      pay_database.createTable(
+        (rows) => console.log('Table created: ', JSON.stringify(rows))
+      );
+    }
+  });
+
+  merchant_database.tableExist((exist) => {
+    if (!exist) {
+      merchant_database.createTable(
+        (rows) => console.log('Table created: ', JSON.stringify(rows))
+      );
+    }
+  });
 
 };

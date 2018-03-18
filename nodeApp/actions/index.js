@@ -47,10 +47,9 @@ module.exports = ({app, pool}) => {
     };
 
     const builder = new xml2js.Builder({ renderOpts: { pretty: false, indent: '', newline: '' } });
-    const dataXML = builder.buildObject(data)
+    const dataXML = builder.buildObject(data);
     const regex = /<root[^>]*>([\s\S]*?)<\/root>/gmi;
     const dataContent = regex.exec(dataXML)[1];
-    // console.log(dataContent);
     const signature = Utils.makeSignature(dataContent, req.session.merchant.password);
 
     let payload = {
@@ -94,8 +93,6 @@ module.exports = ({app, pool}) => {
     const details = req.body.details;
     const merchantId = req.session.merchant.id;
     const paymentId = Utils.generateId();
-    console.log(paymentId)
-    console.log(amount)
     const data = {
       oper: [ 'cmt' ],
       wait: [ 0 ],

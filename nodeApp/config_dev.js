@@ -4,6 +4,6 @@ module.exports = {
     database: 'test',
     user: 'root',
     password: 'testuser',
-    connectionLimit : 10
+    connectionLimit : 10,
   }
 };
