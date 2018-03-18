@@ -3,7 +3,7 @@
 **/*.crt
 **/*.key
 **/*.csr
-**/package-lock.json
+*/certificates
 
 
 # compiled output
