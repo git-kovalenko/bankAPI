@@ -3,6 +3,8 @@
 **/*.crt
 **/*.key
 **/*.csr
+**/package-lock.json
+
 
 # compiled output
 /dist

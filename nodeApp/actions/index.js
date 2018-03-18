@@ -155,10 +155,10 @@ module.exports = ({app, pool}) => {
   });
 
 
-  app.post('/test', (req, res) => {
-    // console.log(req);
+  app.get ('/test', (req, res) => {
+    console.log(req.user);
     // res.send(req.body);
-    res.send(util.inspect(req));
+    res.send(req.user);
   });
 
 

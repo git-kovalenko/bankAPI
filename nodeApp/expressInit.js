@@ -7,16 +7,17 @@ const path = require('path');
 const parseurl = require('parseurl');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-
+const jwt = require('jsonwebtoken');
+const expressJwt = require('express-jwt');
 
 module.exports = ({pool}) => {
-  const merchant_database = require('./merchant_database')(pool);
   const actionsInit = require('./actions/index.js');
-  const key = fs.readFileSync('certificates/private.key');
-  const cert = fs.readFileSync( 'certificates/domain.crt' );
+  const key = fs.readFileSync('./certificates/private.key');
+  const cert = fs.readFileSync( './certificates/domain.crt' );
+  const sessionKey = fs.readFileSync( './certificates/sessionKey.txt', 'utf8' );
   const app = express();
   app.use(session({
-    secret: 'secret_key',
+    secret: sessionKey,
     resave: true,
     saveUninitialized: true
   }));
@@ -39,8 +40,22 @@ module.exports = ({pool}) => {
     sslRequiredMessage: 'SSL Required.'
   });
 
-  const application = actionsInit({app, pool});
+  app.use(expressJwt({
+    secret: key,
+  }).unless({path: ['/login']}));
+  app.use(function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError') {
+      res.status(401).send('invalid token...');
+    }
+  });
 
+  app.post('/login', (req, res) => {
+    const user = {id: 3};
+    const token = jwt.sign({user}, key);
+    res.json({token});
+  });
+
+  const application = actionsInit({app, pool});
   https.createServer({key, cert}, application).listen(process.env.PORT || 443, function () {
     console.log('Server listening on port '+ (process.env.PORT || 443) +'!');
   });
