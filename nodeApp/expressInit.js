@@ -9,8 +9,10 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
+// const utils = require('./utils');
 
 module.exports = ({pool}) => {
+  const userDatabase = require('./userDatabase')(pool);
   const actionsInit = require('./actions/index.js');
   const key = fs.readFileSync('./certificates/private.key');
   const cert = fs.readFileSync( './certificates/domain.crt' );
@@ -43,16 +45,29 @@ module.exports = ({pool}) => {
   app.use(expressJwt({
     secret: key,
   }).unless({path: ['/login']}));
-  app.use(function (err, req, res, next) {
+  app.use(function (err, req, res) {
     if (err.name === 'UnauthorizedError') {
       res.status(401).send('invalid token...');
     }
   });
 
   app.post('/login', (req, res) => {
-    const user = {id: 3};
-    const token = jwt.sign({user}, key);
-    res.json({token});
+    userDatabase.getUser({
+      login: req.body.login,
+      email: req.body.email,
+      password: req.body.password,
+    }).then((rows) => {
+      if(rows && rows[0]) {
+        const { id, login } = rows[0];
+        const token = jwt.sign({user: { id, login }}, key, { expiresIn: '20m' });
+        res.json({token});
+      }else{
+        res.status(401).send('Invalid credentials');
+      }
+    }).catch((error) => {
+      console.error(error);
+      res.status(500).send('internal server error');
+    });
   });
 
   const application = actionsInit({app, pool});

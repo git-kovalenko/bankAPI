@@ -1,7 +1,7 @@
 module.exports = ({pool}) => {
   const merchant_database = require('./merchant_database')(pool);
   const pay_database = require('./pay_database')(pool);
-
+  const userDatabase = require('./userDatabase')(pool);
   if (!process.conf) {
     process.conf = {};
   }
@@ -10,10 +10,17 @@ module.exports = ({pool}) => {
     merchant_database.getById(merchantId)
       .then((rows) => {
         process.conf.merchant = rows[0] ? rows[0] : null;
-
       });
   };
   getMerchant();
+
+  userDatabase.tableExist((exist) => {
+    if (!exist) {
+      userDatabase.createTable(
+        (rows) => console.log('Table created: ', JSON.stringify(rows))
+      );
+    }
+  });
 
   pay_database.tableExist((exist) => {
     if (!exist) {
