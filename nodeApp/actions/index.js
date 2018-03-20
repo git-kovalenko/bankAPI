@@ -125,7 +125,6 @@ module.exports = ({app, pool}) => {
         data: [data]
       }
     };
-
     request(
       {
         method: 'POST',
@@ -140,7 +139,7 @@ module.exports = ({app, pool}) => {
           res.send(error);
         }
         xmlParser.parseString(body, (err, result) => {
-          const payment = result.response.data.payment.$;
+          const payment = result.response ? result.response.data.payment.$ : '';
           if(payment) {
             pay_database.add(payment,  () => {
               res.send(payment);

@@ -52,6 +52,7 @@ module.exports = ({pool}) => {
   });
 
   app.post('/login', (req, res) => {
+    console.log('body', req.body);
     userDatabase.getUser({
       login: req.body.login,
       email: req.body.email,
