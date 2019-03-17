@@ -1,4 +1,4 @@
-package com.bankapi.bankapi.model;
+package com.bankapi.api.model;
 
 public class Person {
 

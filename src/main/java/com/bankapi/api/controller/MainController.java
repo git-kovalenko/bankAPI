@@ -1,6 +1,6 @@
-package com.bankapi.bankapi.controller;
+package com.bankapi.api.controller;
 
-import com.bankapi.bankapi.model.Person;
+import com.bankapi.api.model.Person;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

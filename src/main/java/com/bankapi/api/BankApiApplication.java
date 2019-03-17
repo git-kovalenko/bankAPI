@@ -1,4 +1,4 @@
-package com.bankapi.bankapi;
+package com.bankapi.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
