@@ -1,4 +1,4 @@
-package org.o7planning.sbjsp.model;
+package com.bankapi.bankapi.model;
 
 public class Person {
 
