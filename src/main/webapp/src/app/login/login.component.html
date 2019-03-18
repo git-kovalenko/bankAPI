@@ -1,0 +1,40 @@
+<form class="form-signin" #loginForm="ngForm" (ngSubmit)="onSubmit()">
+  <div class="text-center mb-4">
+    <p>Login page</p>
+  </div>
+
+  <div class="form-label-group">
+    <input
+      type="email"
+      name="email"
+      id="inputEmail"
+      class="form-control"
+      placeholder="Email address"
+      [(ngModel)]="credentials.email"
+      required
+      autofocus=""
+    />
+    <label for="inputEmail">Email address or login</label>
+  </div>
+
+  <div class="form-label-group">
+    <input
+      type="password"
+      name="password"
+      id="inputPassword"
+      class="form-control"
+      placeholder="Password"
+      required=""
+      [(ngModel)]="credentials.password"
+    />
+    <label for="inputPassword">Password</label>
+  </div>
+
+  <div class="checkbox mb-3">
+    <label>
+      <input type="checkbox" value="remember-me"> Remember me
+    </label>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  <p class="mt-5 mb-3 text-muted text-center">© 2018</p>
+</form>

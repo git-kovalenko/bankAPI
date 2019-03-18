@@ -1,0 +1,72 @@
+<div class="panel panel-primary">
+  <h6>Merchant</h6>
+
+  <div class="panel-body" *ngIf="card">
+    <div class="input-group mb-3 input-group-sm">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Card Number</span>
+      </div>
+      <input type="text" value="{{card.card_number}}">
+    </div>
+    <div class="input-group mb-3 input-group-sm">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Available ballance {{card.currency}}</span>
+      </div>
+      <input type="text" value="{{merchantData.info.cardbalance.av_balance}}">
+    </div>
+    <div class="input-group mb-3 input-group-sm">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Ballance {{card.currency}}</span>
+      </div>
+      <input type="text" value="{{merchantData.info.cardbalance.balance}}">
+    </div>
+    <div class="input-group mb-3 input-group-sm">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Finance limit {{card.currency}}</span>
+      </div>
+      <input type="text" value="{{merchantData.info.cardbalance.fin_limit}}">
+    </div>
+  </div>
+
+  <br />
+  <h6>Payment To Card By Number</h6>
+  <form #paymentForm="ngForm" (ngSubmit)="onSubmit()" >
+    <div class="form-group">
+      <label for="cardNumber" class="control-label">Card Number</label>
+      <input type="text" id="cardNumber" class="form-control"
+             name="cardNumber"
+             [(ngModel)]="paymentOptions.cardNumber"
+             required
+             [disabled]="disableFields"
+      />
+    </div>
+    <div class="form-group">
+      <label for="amount" class="control-label">Amount</label>
+      <input type="text" id="amount" class="form-control"
+             name="amount"
+             [(ngModel)]="paymentOptions.amount"
+             required
+             [disabled]="disableFields"
+      />
+    </div>
+    <div class="form-group">
+      <label for="details" class="control-label">Details</label>
+      <input type="text" id="details" class="form-control"
+             name="details"
+             [(ngModel)]="paymentOptions.details"
+             required
+             [disabled]="disableFields"
+      />
+    </div>
+    <!--<div *ngIf="submitResponse.errorCode && submitResponse.errorCode != '0'" class="alert"-->
+         <!--[ngClass]="{'alert-danger': submitResponse.errorCode != '0'}">-->
+      <!--<strong>{{submitResponse.errorMessage}}</strong>-->
+      <!--<br>{{submitResponse.errorDetails}}-->
+    <!--</div>-->
+    <button type="submit" class="btn btn-primary" [disabled]="!paymentForm.valid">
+      Submit
+      <i class="glyphicon glyphicon-refresh " [ngClass]="{'glyphicon-spin':spinner}"></i>
+    </button>
+    {{paymentResponse}}
+  </form>
+</div>
