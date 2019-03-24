@@ -13,9 +13,14 @@ import { MerchantComponent } from './merchant/merchant.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
+import { Routes, RouterModule } from "@angular/router";
+import { HomeComponent } from './home/home.component';
 
-
-
+const routes: Routes = [
+    { path: '', pathMatch: 'full', redirectTo: 'home'},
+    { path: 'home', component: HomeComponent},
+    { path: 'login', component: LoginComponent}
+];
 
 @NgModule({
   declarations: [
@@ -24,9 +29,11 @@ import { AuthService } from './services/auth.service';
     CurrencyRatesComponent,
     NavbarComponent,
     MerchantComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
+    RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     NgbModule.forRoot(),
