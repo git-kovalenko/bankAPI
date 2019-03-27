@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+    title = 'Demo';
+    greeting: any = {
+        id: null,
+        content: null
+    };
 
-  ngOnInit() {
+    constructor(private authService: AuthService, private http: HttpClient) {
+        http.get('resource').subscribe(data  => this.greeting = data);
+    }
+
+    authenticated() { return this.authService.authenticated; }
+
+    ngOnInit() {
   }
 
 }

@@ -10,7 +10,7 @@ export class AuthService {
     private http: HttpClient
   ) {}
 
-  authenticate(credentials, callback) {
+  authenticate(credentials: Credentials, callback) {
     const headers = new HttpHeaders(credentials ? {
       authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
     } : {});
@@ -25,13 +25,13 @@ export class AuthService {
     });
   }
 
-  public login(credentials: Credentials): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        // 'Content-Type': 'application/x-www-form-urlencoded'
-      })
-    };
-    return this.http.post('https://localhost:443/login', credentials, httpOptions);
-  }
+  // public login(credentials: Credentials): Observable<any> {
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type':  'application/json',
+  //       // 'Content-Type': 'application/x-www-form-urlencoded'
+  //     })
+  //   };
+  //   return this.http.post('https://localhost:443/username', credentials, httpOptions);
+  // }
 }
