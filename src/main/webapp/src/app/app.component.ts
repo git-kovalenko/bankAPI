@@ -11,14 +11,10 @@ import "rxjs/add/operator/finally";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    constructor(private auth: AuthService, private http: HttpClient, private router: Router) {
-        this.auth.authenticate(undefined, undefined);
-    }
-    logout() {
-        this.http.post('logout', {}).finally(() => {
-            this.auth.authenticated = false;
-            this.router.navigateByUrl('/username');
-        }).subscribe();
+    constructor(private auth: AuthService, private router: Router) {
+        this.auth.authenticate(undefined, () => {
+            this.router.navigateByUrl("/")
+        });
     }
     ngOnInit () {
 

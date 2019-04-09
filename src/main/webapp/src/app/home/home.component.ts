@@ -10,22 +10,18 @@ import {Router} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
 
-    title = 'Demo';
     greeting: any = {
         id: null,
         content: null
     };
 
-    constructor(private authService: AuthService, private http: HttpClient, private router: Router) {
-        http.get('resource').subscribe(data  => this.greeting = data);
-    }
+    constructor(private authService: AuthService, private router: Router) {}
 
     authenticated() { return this.authService.authenticated; }
 
     ngOnInit() {
         if(!this.authenticated()){
-            this.router.navigateByUrl('/username');
+            this.router.navigateByUrl('/loginPage');
         }
     }
-    navigateBy
 }

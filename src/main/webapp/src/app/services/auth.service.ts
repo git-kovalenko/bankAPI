@@ -10,7 +10,7 @@ export class AuthService {
     private http: HttpClient
   ) {}
 
-  authenticate(credentials: Credentials, callback) {
+  authenticate(credentials: Credentials, callback: Function) {
     const headers = new HttpHeaders(credentials ? {
       authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
     } : {});
@@ -18,20 +18,16 @@ export class AuthService {
     this.http.get('user', {headers: headers}).subscribe(response => {
       if (response['name']) {
         this.authenticated = true;
-      } else {
-        this.authenticated = false;
+        return typeof callback === "function" ? callback() : true;
       }
-      return callback && callback();
+      this.authenticated = false;
+      return null;
     });
   }
-
-  // public login(credentials: Credentials): Observable<any> {
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type':  'application/json',
-  //       // 'Content-Type': 'application/x-www-form-urlencoded'
-  //     })
-  //   };
-  //   return this.http.post('https://localhost:443/username', credentials, httpOptions);
-  // }
+  logout(callback: Function) {
+      this.http.post('logout', {}).finally(() => {
+          this.authenticated = false;
+          return typeof callback === "function" ? callback() : true;
+      }).subscribe();
+  }
 }
