@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PrivatBankService } from '../services/privat-bank.service';
-import { Observable } from 'rxjs/Observable';
 import { Payment } from './interfaces';
 
 @Component({

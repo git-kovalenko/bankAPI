@@ -1,8 +1,10 @@
 package com.bankapi.api;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @SpringBootApplication
+@EnableAutoConfiguration
+@EnableFeignClients
 @RestController
 public class BankApiApplication {
 

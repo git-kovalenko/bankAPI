@@ -10,7 +10,7 @@ export class PrivatBankService {
   ) {}
 
   public getRates(): Observable<any> {
-    return this.http.get('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5');
+    return this.http.get('/exchange');
   }
 
   public getMerchantData(): Observable<any> {
