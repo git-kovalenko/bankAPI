@@ -2,11 +2,13 @@ package com.bankapi.api.controller;
 
 import com.bankapi.api.IExchangeClient;
 import com.bankapi.api.model.Person;
+import com.bankapi.api.model.Rates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -25,16 +27,13 @@ public class MainController {
     }
 
     @RequestMapping(value = { "/exchange" }, method = RequestMethod.GET)
-    public ArrayList getRates() {
-        ArrayList rates = exchangeClient.getRates("","",5);
-        return rates;
+    public ArrayList<Rates> getRates() {
+        return exchangeClient.getRates("","",5);
     }
 
     @RequestMapping(value = { "/personList" }, method = RequestMethod.GET)
-    public String viewPersonList(Model model) {
-
-        model.addAttribute("persons", persons);
-
-        return "personList";
+    @ResponseBody
+    public List<Person> viewPersonList(Model model) {
+        return persons;
     }
 }

@@ -1,17 +1,21 @@
 package com.bankapi.api;
 
-import org.apache.catalina.Store;
+import com.bankapi.api.model.Rates;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 
-@FeignClient(name="exchangeClient", url="https://api.privatbank.ua/p24api")
+//https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5
+
+@FeignClient(name="exchangeClient", url="https://api.privatbank.ua/p24api", configuration = FeignLogConfiguration.class)
 public interface IExchangeClient {
     @RequestMapping(method = RequestMethod.GET, value = "/pubinfo")
-    ArrayList getRates(@PathVariable("json") String json,
-                       @PathVariable("exchange") String exchange,
-                       @PathVariable("coursid") int coursid);
+    ArrayList<Rates> getRates(@RequestParam("json") String json,
+                              @RequestParam("exchange") String exchange,
+                              @RequestParam("coursid") Integer coursid);
+
+
 }
