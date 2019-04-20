@@ -27,6 +27,7 @@ public class MainController {
     }
 
     @RequestMapping(value = { "/exchange" }, method = RequestMethod.GET)
+    @ResponseBody
     public ArrayList<Rates> getRates() {
         return exchangeClient.getRates("","",5);
     }
